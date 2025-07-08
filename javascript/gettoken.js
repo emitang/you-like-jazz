@@ -1,25 +1,30 @@
-const {secret} = require ('./secrets.js');
+import {secret} from './secrets.js';
 
 // Data sent from the client to the server
 const body = 'grant_type=client_credentials&client_id=' + secret.client_id + '&client_secret=' + secret.client_secret;
 
+var token
 
-  async function main() {
-    const response = await fetch('https://accounts.spotify.com/api/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: body
-    });
-    const data = await response.json();
-    console.log(data);
-    // returns something like:
-    // { title: 'foo', body: 'bar', userId: 1, id: 101 }
-  }
-  
-  main().catch(console.error);
-  
+export async function getToken() {
+  const response = await fetch('https://accounts.spotify.com/api/token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Scope': 'playlist-read-private',
+      'Scope': 'playlist-read-collaborative'
+    },
+    body: body
+  });
+  let data = await response.json();
+  console.log(data);
+  return data;
+
+  // returns something like:
+  // { title: 'foo', body: 'bar', userId: 1, id: 101 }
+}
+
+getToken().catch(console.error);
+
 
 // curl command from spotify for reference
 /*
