@@ -1,13 +1,10 @@
 import {secret} from './secrets.js';
 import {getToken} from './gettoken.js';
 
-// Data sent from the client to the server
-//const body = 'grant_type=client_credentials&client_id=' + secret.client_id + '&client_secret=' + secret.client_secret;
-
 
   async function getPlaylist() {
     let token = await getToken();
-    console.log(token.token_type + ' ' + token.access_token)
+    // console.log(token.token_type + ' ' + token.access_token)
     const response = await fetch('https://api.spotify.com/v1/users/' + secret.username + '/playlists', {
       method: 'GET',
       headers: {
@@ -16,13 +13,16 @@ import {getToken} from './gettoken.js';
       },
       //body: body
     });
-    const data = await response.json();
-    console.log(data);
-    // returns something like:
-    // { title: 'foo', body: 'bar', userId: 1, id: 101 }
+    const results = await response.json();
+    //console.log(data);
+    return results.items;
   }
   
-  getPlaylist().catch(console.error);
+  let result = await getPlaylist().catch(console.error);
+  //console.log(result);
+  //console.log(result[1]);
+  //console.log(result[1].tracks);
+  //
   
 
 // curl command from spotify for reference

@@ -16,11 +16,8 @@ export async function getToken() {
     body: body
   });
   let data = await response.json();
-  console.log(data);
+  //console.log(data);
   return data;
-
-  // returns something like:
-  // { title: 'foo', body: 'bar', userId: 1, id: 101 }
 }
 
 getToken().catch(console.error);
