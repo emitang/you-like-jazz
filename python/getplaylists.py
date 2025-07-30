@@ -14,10 +14,12 @@ response = requests.get(url, headers=headers)
 # Check if the response is successful
 if response.status_code == 200:
     data = response.json()['items']
+    df = pd.DataFrame(data = data)
+    df = df[['name', 'tracks', 'uri']]
 else:
     print("error!")
 
-print(data)
+print(df)
 
 # let token = await getToken();
     # // console.log(token.token_type + ' ' + token.access_token)
